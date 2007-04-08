@@ -1,0 +1,37 @@
+acer-acpi (0.3-2) unstable; urgency=low
+
+  * Make binary modules depend on linux-image
+  * Bump debhelper compat level to 5
+  * Remove bogus targets from rules.modules
+  * Binary modules provide acer-acpi-modules
+  * Use dh_installmodules to handle modules post{inst,rm}
+  * Clean up debian/rules 
+
+ -- Kel Modderman <kelrin@tpg.com.au>  Mon, 20 Mar 2006 23:01:56 +1000
+
+acer-acpi (0.3-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Kel Modderman <kelrin@tpg.com.au>  Sun, 30 Oct 2005 22:32:39 +1000
+
+acer-acpi (0.2-2) unstable; urgency=low
+
+  * Clean up debian/rules.
+    - loop install debian files
+    - use bzip2
+  * bzip2 added to relevant dependencies.
+  * build-essential removed from build-dep field.
+  * Remove acer-acpi-source.install.
+  * Add acer-acpi-source.dirs.
+  * Remove cdbs auto update of control file.
+    - removed control.in
+
+ -- Kel Modderman <kelrin@tpg.com.au>  Mon, 26 Sep 2005 13:24:20 +1000
+
+acer-acpi (0.2-1) unstable; urgency=low
+
+  * Initial release.
+
+ -- Kel Modderman <kelrin@tpg.com.au>  Thu, 15 Sep 2005 19:00:44 +1000
+

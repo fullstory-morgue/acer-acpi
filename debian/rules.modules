@@ -1,0 +1,47 @@
+#!/usr/bin/make -f
+
+PACKAGE := acer-acpi-modules
+MA_DIR ?= /usr/share/modass
+-include $(MA_DIR)/include/generic.make
+-include $(MA_DIR)/include/common-rules.make
+
+BASEVERS := $(shell echo $(KVERS) | cut -d. -f-2)
+
+# kernel module filename extension
+ifeq ($(BASEVERS),2.6)
+	modextension := .ko
+else
+	modextension := .o
+endif
+
+.PHONY: kdist_config
+kdist_config: prep-deb-files
+
+.PHONY: binary-modules
+binary-modules: kdist_config
+	dh_testdir
+	dh_testroot
+	dh_clean -k
+	
+	# Build modules
+	$(MAKE) -C $(CURDIR) KERNELSRC=$(KSRC) KERNELVERSION=$(KVERS)
+	
+	dh_installdirs				lib/modules/$(KVERS)/extra
+	dh_install acer_acpi$(modextension)	lib/modules/$(KVERS)/extra	
+
+	dh_installdocs
+	dh_installchangelogs
+	dh_compress
+	dh_fixperms
+	dh_installmodules
+	dh_installdeb
+	dh_gencontrol -- -v$(VERSION)
+	dh_md5sums
+	dh_builddeb --destdir=$(DEB_DESTDIR)
+
+.PHONY: kdist_clean
+kdist_clean:
+	dh_testdir
+	dh_testroot
+	dh_clean
+	$(MAKE) clean

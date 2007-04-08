@@ -1,0 +1,21 @@
+Source: acer-acpi
+Section: net
+Priority: optional
+Maintainer: Kel Modderman <kelrin@tpg.com.au>
+Build-Depends: debhelper (>= 5.0.0), bzip2
+Standards-Version: 3.6.2
+
+Package: acer-acpi-modules-_KVERS_
+Depends: linux-image-_KVERS_ | kernel-image-_KVERS_
+Provides: acer-acpi-modules
+Architecture: any
+Description: acer-acpi modules for Linux (kernel _KVERS_).
+ This package contains the set of loadable kernel modules for the
+ acer_acpi driver.
+ .
+ This package contains the compiled kernel modules for _KVERS_
+ .
+ If you have compiled your own kernel, you will most likely need to build
+ your own acer-acpi-modules. The acer-acpi-source package has been
+ provided for use with the Debian's module-assistant or kernel-package
+ utilities to produce a version of acer-acpi-module for your kernel.

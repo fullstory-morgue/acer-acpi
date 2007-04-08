@@ -1,0 +1,22 @@
+acer-acpi for debian
+====================
+
+This package provides the acer-acpi source code that can be used to build 
+modules that work with your custom built linux kernel. The source files are 
+located in /usr/src/acer-acpi.tar.bz2; unpacking that file in /usr/src will
+produce a build tree in /usr/src/modules/acer-acpi/ (The tar file can also be 
+unpacked elsewhere).
+
+Building acer-acpi kernel modules with module-assistant
+=======================================================
+
+Please install the module-assistant package and issue the following commands
+in a shell:-
+
+  $ m-a prepare
+  $ m-a a-i acer-acpi
+
+m-a is short for module-assistant, and a-i is short for auto-install. Please
+see the module-assistant documentation for futher details about this process.
+
+ -- Kel Modderman <kelrin@tpg.com.au>  Tue, 27 Sep 2005 10:33:45 +1000

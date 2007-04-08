@@ -1,0 +1,20 @@
+Source: acer-acpi
+Section: net
+Priority: optional
+Maintainer: Kel Modderman <kelrin@tpg.com.au>
+Uploaders: Stefan Lippers-Hollmann <s.l-h@gmx.de>
+Build-Depends-Indep: cdbs, debhelper (>= 5.0.0), bzip2 
+Standards-Version: 3.6.2
+
+Package: acer-acpi-source
+Architecture: all
+Depends: debhelper (>= 5.0.0), build-essential, module-assistant, bzip2
+Description: source code for the acer-acpi driver
+ acer_acpi is a driver to allow you to control various aspects of your Acer
+ laptop hardware using the proc filesystem.  It was originally developed in
+ order to activate the wireless LAN card under a 64-bit version of Linux,
+ as acerhk (the previous fine solution to the problem) relied on making BIOS
+ calls which are not allowed from a 64-bit OS.
+ .
+ This package provides the source code for the acer-acpi kernel modules.
+ Kernel source or headers are required to compile these modules.
