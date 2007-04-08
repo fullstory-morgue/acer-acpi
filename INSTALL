@@ -1,0 +1,47 @@
+Installation
+************
+
+1. You need the kernel sources (or kernel headers for your kernel)
+installed to compile the driver.
+
+2. Your kernel needs loadable module support with version information for
+modules enabled. Usage of procfs is highly recommended.
+If you want the driver to generate regular keyboard events using
+kernel version 2.4 you need the input system of the kernel enabled
+(Input core support AND keyboard support). In kernel version 2.6 all
+needed functionality should be available by default.
+
+### I HAVE NO IDEA IF THIS WILL WORK WITH A 2.4 SERIES KERNEL ###
+
+In most cases you can skip the next step, the Makefile tries do determine
+the correct directory on its own. Change KERNELSRC only if the autodetection
+does not work for you. Otherwise proceed directly with step 4.
+
+3. Before you compile the driver, change KERNELSRC in the makefile to your
+path to the kernel build environment. If you are using a self compiled kernel,
+point it to the root of your sources. If you are using a packaged kernel of
+your distribution, install the package with kernel headers
+(Debian:kernel-headers) and point KERNELSRC to where the headers and config
+files are located. If you are using Debian, this
+would be "/lib/modules/<kernelversion>/build".
+
+4. Do:
+	make
+to compile the driver. If you run into problems because of the makefile not
+recognizing your kernel version correctly, try this:
+	make acer_acpi.o	- kernel version 2.4
+	make acer_acpi.ko	- kernel version 2.6
+
+5. Do:
+	make install
+to install the kernel module.  If that step fails, try:
+
+Copy the created file "acer_acpi.o" ("acer_acpi.ko" with version 2.6) to your
+kernel modules path. In Debian this could be
+"/lib/modules/<kernelversion>/kernel/drivers/char/".
+Update module dependencies: depmod -a
+
+6. Try loading the module with:
+	insmod/modprobe acer_acpi
+
+If you don't see any error messages, check the README for usage information.
