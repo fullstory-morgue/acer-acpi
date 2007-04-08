@@ -3,8 +3,9 @@
 #KERNELSRC=/usr/src/linux
 #KERNELSRC=/usr/src/kernel-source-2.4.21-acpi-i2c-lmsensors
 KERNELSRC?=/lib/modules/`uname -r`/build
-KERNELVERSION=$(shell awk -F\" '/REL/ {print $$2}' $(KERNELSRC)/include/linux/version.h)
+KERNELVERSION=$(shell awk -F\" '/REL/ {print $$2}' $(KERNELSRC)/include/linux/utsrelease.h)
 KERNELMAJOR=$(shell echo $(KERNELVERSION)|head -c3)
+KBUILD_BASENAME=
 
 # next line is for kernel 2.6, if you integrate the driver in the kernel tree
 # /usr/src/linux/drivers/acer_acpi - or something similar

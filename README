@@ -1,4 +1,4 @@
-This is acer_acpi version 0.3
+This is acer_acpi version 0.4
 
 ### THIS IS VERY MUCH A WORK IN PROGRESS.  NO WARRANTY GIVEN.  IF YOU
 ### BREAK YOUR LAPTOP USING THIS DRIVER, YOU GET TO KEEP THE PIECES AND
@@ -11,6 +11,9 @@ as acerhk (the previous fine solution to the problem) relied on making BIOS
 calls which are not allowed from a 64-bit OS.
 
 Please read the INSTALL file for installation instructions.
+
+PLEASE NOTE: I AM NO LONGER ACTIVELY DEVELOPING ACER_ACPI.
+(many would note that I never actively developed it! :-)
 
 Usage
 *****
@@ -58,11 +61,8 @@ Email: Mark Smith <aceracpi@archernar.co.uk>
 
 The latest version can be found here:
 
-http://www.archernar.co.uk/acer_acpi/acer_acpi_main.html
+http://code.google.com/p/aceracpi
 
-I've set up a mailing list to notify everyone about new releases of acer_acpi.
-details are on the web page.  I apologise in advance for the adverts that will
-be embedded in the emails!
 
 
 
