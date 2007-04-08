@@ -1,16 +1,15 @@
 This package was debianized by Kel Modderman <kelrin@tpg.com.au> on
 Thu, 15 Sep 2005 19:00:44 +1000.
 
-It was downloaded from http://www.archernar.co.uk/acer_acpi/acer_acpi_main.html
+It was downloaded from http://code.google.com/p/aceracpi/
 
 Copyright Holder: Mark Smith <aceracpi@archernar.co.uk>
 
 License:
 
    This package is free software; you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation; either version 2 of the License, or
-   (at your option) any later version.
+   it under the terms of the GNU General Public License version 2 as
+   published by the Free Software Foundation.
 
    This package is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -21,6 +20,5 @@ License:
    along with this package; if not, write to the Free Software Foundation, 
    Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 
-On Debian systems, the complete text of the GNU General
-Public License can be found in `/usr/share/common-licenses/GPL'.
-
+On Debian systems, the complete text of the GNU General Public License
+version 2 can be found in `/usr/share/common-licenses/GPL-2'.

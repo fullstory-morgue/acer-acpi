@@ -1,3 +1,16 @@
+acer-acpi (0.4-1) unstable; urgency=low
+
+  * New upstream release.
+  * New upstream Homepage, modify debian/copyright accordingly.
+  * No longer keep old kernel-image-_KVERS_ compat in
+    debian/control.modules.in.
+  * New Maintainer email address.
+  * Remove (bogus) linux 2.4 compat from debian/rules.modules.
+  * Versioned depends on debhelper (>= 5.0.37) for dh_installmodules support.
+  * Standards version 3.7.2.
+
+ -- Kel Modderman <kel@otaku42.de>  Mon, 09 Apr 2007 08:22:19 +1000
+
 acer-acpi (0.3-2) unstable; urgency=low
 
   * Make binary modules depend on linux-image

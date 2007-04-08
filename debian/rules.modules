@@ -5,15 +5,6 @@ MA_DIR ?= /usr/share/modass
 -include $(MA_DIR)/include/generic.make
 -include $(MA_DIR)/include/common-rules.make
 
-BASEVERS := $(shell echo $(KVERS) | cut -d. -f-2)
-
-# kernel module filename extension
-ifeq ($(BASEVERS),2.6)
-	modextension := .ko
-else
-	modextension := .o
-endif
-
 .PHONY: kdist_config
 kdist_config: prep-deb-files
 
@@ -26,8 +17,8 @@ binary-modules: kdist_config
 	# Build modules
 	$(MAKE) -C $(CURDIR) KERNELSRC=$(KSRC) KERNELVERSION=$(KVERS)
 	
-	dh_installdirs				lib/modules/$(KVERS)/extra
-	dh_install acer_acpi$(modextension)	lib/modules/$(KVERS)/extra	
+	dh_installdirs		lib/modules/$(KVERS)/extra
+	dh_install acer_acpi.ko	lib/modules/$(KVERS)/extra	
 
 	dh_installdocs
 	dh_installchangelogs

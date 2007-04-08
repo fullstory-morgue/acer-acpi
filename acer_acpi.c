@@ -20,7 +20,7 @@
  *
  *
  *  The devolpment page for this driver is located at
- *  http://www.archernar.co.uk/acer_acpi/acer_acpi_main.html
+ *  http://code.google.com/p/aceracpi
  *
  *  Credits:
  *
@@ -33,7 +33,7 @@
  *
  */
 
-#define ACER_ACPI_VERSION	"0.3"
+#define ACER_ACPI_VERSION	"0.4"
 #define PROC_INTERFACE_VERSION	1
 #define PROC_ACER		"acer"
 

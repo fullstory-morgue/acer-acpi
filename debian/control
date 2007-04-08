@@ -1,14 +1,14 @@
 Source: acer-acpi
 Section: net
 Priority: optional
-Maintainer: Kel Modderman <kelrin@tpg.com.au>
+Maintainer: Kel Modderman <kel@otaku42.de>
 Uploaders: Stefan Lippers-Hollmann <s.l-h@gmx.de>
-Build-Depends-Indep: cdbs, debhelper (>= 5.0.0), bzip2 
-Standards-Version: 3.6.2
+Build-Depends-Indep: cdbs, debhelper (>= 5.0.37), bzip2 
+Standards-Version: 3.7.2
 
 Package: acer-acpi-source
 Architecture: all
-Depends: debhelper (>= 5.0.0), build-essential, module-assistant, bzip2
+Depends: debhelper (>= 5.0.37), build-essential, module-assistant, bzip2
 Description: source code for the acer-acpi driver
  acer_acpi is a driver to allow you to control various aspects of your Acer
  laptop hardware using the proc filesystem.  It was originally developed in
