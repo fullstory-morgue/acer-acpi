@@ -3,8 +3,6 @@
 include /usr/share/cdbs/1/rules/debhelper.mk
 
 install/acer-acpi-source::
-	# Enforce executable bit on debian/rules, and create directory structure for 
-	# modules source
 	install -D -m 0755 debian/rules.modules \
 		debian/tmp/modules/acer-acpi/debian/rules
 	
@@ -14,9 +12,8 @@ install/acer-acpi-source::
 	done
 		
 	# Prepare upstream source
-	install -m 0644 Makefile *.c \
-		debian/tmp/modules/acer-acpi/
+	install -m 0644 Makefile *.c debian/tmp/modules/acer-acpi/
 	
 	# Prepare the debian source tarball
-	cd debian/tmp/ && \
-		tar jcf ../acer-acpi-source/usr/src/acer-acpi.tar.bz2 modules
+	tar jcf debian/acer-acpi-source/usr/src/acer-acpi.tar.bz2  \
+		-C debian/tmp modules

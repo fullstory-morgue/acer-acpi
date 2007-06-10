@@ -1,3 +1,11 @@
+2007-05-05 Version 0.5
+	New maintainer added: Carlos Corbacho <cathectic@gmail.com>	
+	cat /proc/acpi/acer/{feature} now works - see ChangeLog for more
+
+2007-03-31 Version 0.4
+	Compiles under later 2.6 series kernels.
+	New home at code.google.com
+
 2005-08-30 Version 0.3
 	Fixed a bug in the call to acpi_bus_register_driver, so the module
 	no longer needs loading twice.

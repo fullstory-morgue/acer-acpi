@@ -3,6 +3,7 @@
  *
  *
  *  Copyright (C) 2005      E.M. Smith
+ *  Copyright (C) 2007      Carlos Corbacho <cathectic@gmail.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -30,10 +31,14 @@
  *                driver problem for my Aspire 5024.
  *  Mathieu Segaud - solved the ACPI problem that needed a double-modprobe
  *                   in version 0.2 and below.
+ *  Carlos Corbacho - added initial status support for wireless/ mail/
+ *                    bluetooth, added module parameter support to turn
+ *                    hardware/ LEDs on and off at module loading (thanks
+ *                    again to acerhk for the inspiration)
  *
  */
 
-#define ACER_ACPI_VERSION	"0.4"
+#define ACER_ACPI_VERSION	"0.5"
 #define PROC_INTERFACE_VERSION	1
 #define PROC_ACER		"acer"
 
@@ -71,6 +76,34 @@ MODULE_LICENSE("GPL");
  */
 #define WMI_METHOD		"\\_SB_.AMW0.WMAB"
 #define WMI_GETDATA		"\\_SB_.AMW0._WED"
+
+
+/*
+ * Presumed start states -
+ * There is no way to know for certain what the start state is
+ * for any of these (ACPI does not provide any methods or store
+ * this anywhere). We therefore start with an unknown state
+ * (this is also how acerhk does it); we then change the status
+ * so that we are in a known state (I suspect LaunchManager on 
+ * Windows does something similar, since the  wireless appears 
+ * to turn off as soon as it launches).
+ *
+ * Plus, we can't tell which features are enabled or disabled on
+ * a specific model, just ranges - e.g. The 5020 series can _support_ 
+ * bluetooth; but the 5021 has no bluetooth, whilst the 5024 does.
+ * However, the BIOS identifies both laptops as 5020 - we
+ * can't tell them apart!
+ */
+static int wireless = -1;
+static int bluetooth = -1;
+static int mailled = -1;
+
+module_param(mailled, int, 0444);
+module_param(wireless, int, 0444);
+module_param(bluetooth, int, 0444);
+MODULE_PARM_DESC(wireless, "Set initial state of Wireless hardware");
+MODULE_PARM_DESC(bluetooth, "Set initial state of Bluetooth hardware");
+MODULE_PARM_DESC(mailled, "Set initial state of Mail LED");
 
 typedef struct _WMAB_args {
 		u32 eax;
@@ -116,8 +149,7 @@ WMAB_execute(WMAB_args * regbuf, struct acpi_buffer *result)
 		params[0].type = ACPI_TYPE_INTEGER;
 		params[0].integer.value = 0x01;	/* Only one instance of this object */
 		params[1].type = ACPI_TYPE_INTEGER;
-		params[1].integer.value = 0x01;	/* Technically this should be method
-																		 * ID */
+		params[1].integer.value = 0x01;	/* Technically this should be method * ID */
 		params[2].type = ACPI_TYPE_BUFFER;
 		params[2].buffer.length = sizeof(WMAB_args);
 		params[2].buffer.pointer = (u8 *) regbuf;
@@ -182,7 +214,7 @@ dispatch_write(struct file *file, const char __user * buffer, unsigned long coun
 static char *
 read_mled(char *p)
 {
-		p += sprintf(p, "Sorry, reading status not yet implemented!\n");
+		p += sprintf(p, "%d\n", mailled);
 		return p;
 }
 
@@ -198,6 +230,7 @@ write_mled(const char *buffer, unsigned long count)
 				args.eax = 0x9610;
 				args.ebx = (value << 8) | 0x31;
 				WMAB_execute(&args, NULL);
+				mailled = value;
 		} else {
 				return -EINVAL;
 		}
@@ -210,7 +243,7 @@ write_mled(const char *buffer, unsigned long count)
 static char *
 read_bt(char *p)
 {
-		p += sprintf(p, "Sorry, reading status not yet implemented!\n");
+		p += sprintf(p, "%d\n", bluetooth);
 		return p;
 }
 
@@ -226,6 +259,7 @@ write_bt(const char *buffer, unsigned long count)
 				args.eax = 0x9610;
 				args.ebx = (value << 8) | 0x34;
 				WMAB_execute(&args, NULL);
+				bluetooth = value;
 		} else {
 				return -EINVAL;
 		}
@@ -238,7 +272,7 @@ write_bt(const char *buffer, unsigned long count)
 static char *
 read_wlan(char *p)
 {
-		p += sprintf(p, "Sorry, reading status not yet implemented!\n");
+		p += sprintf(p, "%d\n", wireless);
 		return p;
 }
 
@@ -254,6 +288,7 @@ write_wlan(const char *buffer, unsigned long count)
 				args.eax = 0x9610;
 				args.ebx = (value << 8) | 0x35;
 				WMAB_execute(&args, NULL);
+				wireless = value;
 				printk(MY_INFO "Wireless value %i\n",value);
 		} else {
 				return -EINVAL;
@@ -382,6 +417,7 @@ acer_acpi_init(void)
 {
 		WMAB_args args;
 		acpi_status status = AE_OK;
+		int count = 0; // Throwaway variable
 
 		printk(MY_INFO "Acer Laptop ACPI Extras version %s\n", ACER_ACPI_VERSION);
 		if (acpi_disabled) {
@@ -423,6 +459,33 @@ acer_acpi_init(void)
 		} else {
 				printk(MY_ERR "Unable to create /proc entries, aborting.\n");
 		}
+
+		/*
+		 * Ensure the values in /proc/acpi/acer are known by resetting them
+		 * now. The default is for everything to be off, unless the module
+		 * parameters specify otherwise.
+		 */
+		if (wireless == 1) {
+			write_wlan("enabled : 1", count);
+		}
+		else {
+			write_wlan("enabled : 0", count);
+		}
+
+		if (bluetooth == 1) {
+			write_bt("enabled : 1", count);
+		}
+		else {
+			write_bt("enabled : 0", count);
+		}
+
+		if (mailled == 1) {
+			write_mled("enabled : 1", count);
+		}
+		else {
+			write_mled("enabled : 0", count);
+		}
+
 		return (ACPI_SUCCESS(status)) ? 0 : -ENODEV;
 }
 

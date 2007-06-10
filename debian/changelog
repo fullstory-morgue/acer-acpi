@@ -1,8 +1,10 @@
-acer-acpi (0.4-2) UNRELEASED; urgency=low
+acer-acpi (0.5-1) unstable; urgency=low
 
-  * NOT RELEASED YET
+  * New upstream release.
+  * Cleanup of debian/rules.
+  * Adjust Build-Dep of debian/control.
 
- -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Mon, 09 Apr 2007 01:42:56 +0200
+ -- Kel Modderman <kel@otaku42.de>  Sun, 10 Jun 2007 19:57:45 +1000
 
 acer-acpi (0.4-1) unstable; urgency=low
 
