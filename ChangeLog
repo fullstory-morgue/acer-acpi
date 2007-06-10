@@ -1,0 +1,17 @@
+2007-05-05	Version 0.5
+
+* Added new maintainer (Carlos Corbacho)
+
+* cat /proc/acpi/acer/{feature} now works
+
+* All devices are now turned off by default
+
+* Fixed Makefile to build with kernels < 2.6.17 (Bug #2)
+
+* Dropped support for 2.4 kernels
+
+2007-03-31	Version 0.4
+
+* Now builds on current kernels! (thanks to Carlos Corbacho)
+
+* acer_acpi has a new home: http://code.google.com/p/aceracpi
