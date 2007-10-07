@@ -5,8 +5,8 @@ Maintainer: Kel Modderman <kel@otaku42.de>
 Uploaders: Stefan Lippers-Hollmann <s.l-h@gmx.de>
 Build-Depends: cdbs, debhelper (>= 5.0.37), bzip2 
 Standards-Version: 3.7.2
-XS-Vcs-Svn: svn://svn.berlios.de/fullstory/acer-acpi/trunk
-XS-Vcs-Browser: http://svn.berlios.de/wsvn/fullstory/acer-acpi/trunk/
+Vcs-Svn: svn://svn.berlios.de/fullstory/acer-acpi/trunk
+Vcs-Browser: http://svn.berlios.de/wsvn/fullstory/acer-acpi/trunk/
 
 Package: acer-acpi-source
 Architecture: all
