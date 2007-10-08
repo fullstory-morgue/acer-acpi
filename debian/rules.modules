@@ -35,4 +35,5 @@ kdist_clean:
 	dh_testdir
 	dh_testroot
 	dh_clean
-	$(MAKE) clean
+	$(MAKE) clean KERNELSRC=$(KSRC) KERNELVERSION=$(KVERS)
+
