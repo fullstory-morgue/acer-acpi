@@ -1,19 +1,16 @@
-This is acer_acpi version 0.5
+This is acer_acpi version 0.9.1
 
 ### THIS IS VERY MUCH A WORK IN PROGRESS.  NO WARRANTY GIVEN.  IF YOU
 ### BREAK YOUR LAPTOP USING THIS DRIVER, YOU GET TO KEEP THE PIECES AND
 ### I WILL ACCEPT ABSOLUTELY NO RESPONSIBILITY.
 
 acer_acpi is a driver to allow you to control various aspects of your Acer
-laptop hardware using the proc filesystem.  It was originally developed in
-order to activate the wireless LAN card under a 64-bit version of Linux,
-as acerhk[1] (the previous fine solution to the problem) relied on making BIOS
-calls which are not allowed from a 64-bit OS.
+laptop hardware using the proc filesystem.  It was originally developed by Mark
+Smith, in order to activate the wireless LAN card under a 64-bit version of
+Linux, as acerhk[1] (the previous fine solution to the problem) relied on making
+BIOS calls which are not allowed from a 64-bit OS.
 
 Please read the INSTALL file for installation instructions.
-
-PLEASE NOTE: I (Mark Smith) AM NO LONGER ACTIVELY DEVELOPING ACER_ACPI.
-(many would note that I never actively developed it! :-)
 
 acer_acpi is now being maintained by Carlos Corbacho <cathectic@gmail.com>
 
@@ -24,15 +21,38 @@ Usage
 
 As root, modprobe acer_acpi
 
-acer_acpi creates entries under /proc/acpi/acer, which enable you to control
-the wireless LAN card, inbuilt Bluetooth adapter, and mail LED of your laptop.
+(To enable debugging, add debug=X, where X is between 0 and 2).
+
+acer_acpi creates entries under /proc/acpi/acer (deprecated),
+/sys/devices/platform/acer_acpi, /sys/class/backlight (2.6.20 and above only)
+and /sys/class/led, which enables you to control some of the following (varies
+between models):
+
+* the wireless LAN card
+* inbuilt Bluetooth adapter
+* mail LED of your laptop
+* brightness of the LCD panel
+
 The syntax for each is the same:
 
+PLEASE NOTE: "enabled: X" support has now been removed
+
+To read the status of a device (0=off, 1=on):
+cat /proc/acpi/acer/{device}
+or
+cat /sys/devices/platform/acer_acpi/{device}
+
 To enable a feature:
-echo "enabled : 1" > /proc/acpi/acer/{feature}
+echo 1 > /proc/acpi/acer/{feature}
+or
+echo 1 > /sys/devices/platform/acer_acpi/{device}
 
 To disable a feature:
-echo "enabled : 0" > /proc/acpi/acer/{feature}
+echo 0 > /proc/acpi/acer/{feature}
+echo 0 > /sys/devices/platform/acer_acpi/{device}
+
+(brightness and mail LED are not visible in /sys/devices/platform - these are
+properly registered with the relevant kernel subsystem).
 
 To enable a feature on loading the module:
 modprobe acer_acpi {feature}=1
@@ -40,8 +60,11 @@ modprobe acer_acpi {feature}=1
 To disable a feature on loading the module (default):
 modprobe acer_acpi {feature}=0
 
-Where {feature} is either wireless, bluetooth, or mailled. (You can have 
+Where {feature} is either wireless, bluetooth, 3G, or mailled. (You can have 
 multiple {feature}'s specified on the modprobe line).
+
+For laptops with a "brightness" option, you can write a value between 0 to 15 
+(or 0x0 to 0xF).
 
 Notes
 *****
@@ -52,19 +75,14 @@ combination.
 e.g. With the BCM4318 on the 5020 series:
 
 ndiswrapper: Light blinks on when transmitting
-bcm43xx/ 
-bcm43xx_mac80211: Solid light, blinks off when transmitting
+bcm43xx/b43: Solid light, blinks off when transmitting
 
 Also, acer_acpi does not yet have any means of deciding whether to
-enable or disable entries in /proc/acpi/acer - this means that for
-hardware that isn't there, you can call "enabled"/ "disabled", it will
-update the value in /proc/acpi/acer/{feature}[1] and won't inform you.
+enable or disable entries in proc or sysfs - this means that for
+hardware that isn't there, you can still read/ write the corresponding file.
 
-So: Just because it _says_ Bluetooth in /proc/acpi/acer, doesn't mean 
+So: Just because it _says_ "bluetooth" in /proc/acpi/acer, doesn't mean 
 you now actually have a Bluetooth device.
-
-[1] We have to keep track ourselves of whether the driver is enabled or
-    disabled.
 
 Credits
 *******
@@ -76,6 +94,7 @@ was an inspiration and a source of good code, particularly John Belmonte,
 author of the toshiba_acpi driver.
 Mathieu Segaud, who solved the problem with having to modprobe the driver
 twice in version 0.2 and below.
+Jim Ramsay, who added support for the new WMID interface
 
 Contact
 *******
@@ -83,14 +102,12 @@ Contact
 If you have problems with the driver, please file a bug on the website and
 include the following information:
 1. name of your laptop (e.g. Acer Aspire 5021)
-2. contents of your ACPI DSDT (this will require acpidump).  I can disassemble
+2. contents of your ACPI DSDT (cat /proc/acpi/dsdt).  I can disassemble
    it if necessary, so I'll accept the binaries.
 
-Aspire 5000
-series users: There is no support for your machines, and very likely
-              never will be, as we cannot find any ACPI method to
-              control the wireless, etc.
+Please check http://code.google.com/p/aceracpi/wiki/SupportedHardware first to
+see if your hardware is supported or unsupported.
 
-The latest version can be found here:
+The latest version of acer_acpi can be found here:
 
 http://code.google.com/p/aceracpi

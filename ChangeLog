@@ -1,3 +1,91 @@
+2007-09-29	Version 0.9.1
+
+* Add EC support for Acer TravelMate 5620
+* Fix WMID
+* Fix more read/ write errors
+
+2007-09-27	Version 0.9.0
+
+* Fix compiling on older (pre 2.6.20) kernels
+
+* Add Acer Aspire 5560, TravelMate 2420 and TravelMate 5720 EC quirks
+
+* Cleanup of interface code
+
+2007-09-03	Version 0.8.2
+
+* Really fix backlight code on older kernels
+
+* Fix write errors with /proc/acpi/acer/brightness
+
+* Fix problem with driver registration on WMID
+
+2007-09-02	Version 0.8.1
+
+* Fix backlight code on older (pre 2.6.21) kernels
+
+2007-09-01	Version 0.8
+
+* Register backlight with backlight subsystem
+
+* Register mail LED with LED subsystem
+
+* Restored 3G support - please note that on WMID laptops, if you try to write
+  to a device that you don't have, you _will_ get an ACPI error in dmesg (on
+  AMW0 this just fails silently).
+
+* Added new sysfs platform driver to /sys/devices/platform/acer_acpi
+
+* Added EC support for Aspire 3020, 3040, 5040, 5650 and 9300
+
+* Code clean up - switched C99 types to kernel types, removed typedefs
+
+2007-08-02	Version 0.7
+
+* Removed "enabled: X" support
+
+* Added initial support for accessing extra devices/ information through the
+  Embedded Controller (limited to just the Aspire 5020 and TravelMate 2490 -
+  thanks to Petr Tomasek for the TravelMate 2490 support). To test this on
+  another laptop, use "force_series=5020" or "force_series=2490" and report
+  back the results. On the 5020 (AMW0), brightness and accurate reading of 
+  wireless and mail LED are supported. On the 2490 (WMID), mail LED is now
+  supported, as well as reading touchpad status. Also, it is possible to force
+  the fan on with both laptops by setting the temperature through ACPI.
+
+* Added suspend/ resume support (settings will be correctly stored on return
+  from suspend-to-RAM and suspend-to-disk).
+
+* Removed typdefs
+
+2007-07-17      Version 0.6.3
+
+* Fix Bash 3.2 bug in Makefile (really fixes *buntu build bug)
+
+2007-07-15      Version 0.6.2
+
+* Fix packaging bug from 0.6.1 (directory name accidentally
+  dropped acer_acpi-)
+
+2007-07-13	Version 0.6.1
+
+* Remove 2.4 kernel check, as it breaks *buntu systems
+  (acer_acpi is still 2.6 only)
+
+2007-07-06	Version 0.6
+
+* Ran code through lindent (Kernel coding style)
+
+* Deprecated "enabled : X" - "X" will now just work
+
+* Patched Makefile to stop complaining on kernels <= 2.6.17
+  (thanks to Subbu)
+
+* Added support for new "WMID" interface (thanks to Jim Ramsay)
+
+* Rewrote backend code for all interfaces and /proc (thanks to
+  Jim Ramsay)
+
 2007-05-05	Version 0.5
 
 * Added new maintainer (Carlos Corbacho)

@@ -1,10 +1,11 @@
-acer-acpi (0.5-2) UNRELEASED; urgency=low
+acer-acpi (0.9.1-1) unstable; urgency=low
 
-  * NOT RELEASED YET
+  * New upstream release.
   * add VCS control headers.
   * update syntax for Vcs headers in debian/control
+  * add debian/watch file.
 
- -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Sun, 07 Oct 2007 14:35:32 +0200
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Mon, 08 Oct 2007 11:03:19 +0200
 
 acer-acpi (0.5-1) unstable; urgency=low
 
