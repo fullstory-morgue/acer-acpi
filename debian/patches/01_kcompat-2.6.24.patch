@@ -1,0 +1,21 @@
+diff -Nur trunk/Makefile trunk.new/Makefile
+--- trunk/Makefile	2007-12-06 17:22:33.000000000 +0100
++++ trunk.new/Makefile	2007-12-08 02:01:43.000000000 +0100
+@@ -16,7 +16,7 @@
+ obj-m += acer_acpi.o
+ 
+ CC=gcc
+-CFLAGS+=-c -Wall -Wstrict-prototypes -Wno-trigraphs -O2 -fomit-frame-pointer -fno-strict-aliasing -fno-common -pipe
++EXTRA_CFLAGS+=-c -Wall -Wstrict-prototypes -Wno-trigraphs -O2 -fomit-frame-pointer -fno-strict-aliasing -fno-common -pipe
+ INCLUDE=-I$(KERNELSRC)/include
+ 
+ ifneq ($(KERNELMAJOR), 2.6)
+@@ -41,7 +41,7 @@
+ 	$(MAKE) -C $(KERNELSRC) SUBDIRS=$(PWD) modules
+ 
+ acer_acpi.o: $(SOURCE)
+-	$(CC) $(INCLUDE) $(CFLAGS) -DMODVERSIONS -DMODULE -D__KERNEL__ -o $(TARGET) $(SOURCE)
++	$(CC) $(INCLUDE) $(EXTRA_CFLAGS) -DMODVERSIONS -DMODULE -D__KERNEL__ -o $(TARGET) $(SOURCE)
+ 
+ clean:
+ 	rm -f *~ *.o *.s *.ko *.mod.c .*.cmd Module.symvers

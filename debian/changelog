@@ -1,9 +1,10 @@
-acer-acpi (0.9.1-3) UNRELEASED; urgency=low
+acer-acpi (0.9.1-3) unstable; urgency=low
 
-  * NOT RELEASED YET
+  * add homepage tag.
   * update to Standards-Version 3.7.3, no changes necessary.
+  * add kernel 2.6.24 compatibility.
 
- -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Mon, 03 Dec 2007 11:54:07 +0100
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Sat, 08 Dec 2007 02:10:57 +0100
 
 acer-acpi (0.9.1-2) unstable; urgency=low
 
