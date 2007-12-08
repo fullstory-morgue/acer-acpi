@@ -1,3 +1,9 @@
+acer-acpi (0.9.1-5) UNRELEASED; urgency=low
+
+  * NOT RELEASED YET
+
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Sat, 08 Dec 2007 16:25:38 +0100
+
 acer-acpi (0.9.1-4) unstable; urgency=low
 
   * add Homepage tag to generated module package as well.
