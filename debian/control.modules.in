@@ -6,6 +6,7 @@ Build-Depends: debhelper (>= 5.0.37), bzip2
 Standards-Version: 3.7.3
 Vcs-Svn: svn://svn.berlios.de/fullstory/acer-acpi/trunk
 Vcs-Browser: http://svn.berlios.de/wsvn/fullstory/acer-acpi/trunk/
+Homepage: http://code.google.com/p/aceracpi/
 
 Package: acer-acpi-modules-_KVERS_
 Depends: linux-image-_KVERS_
