@@ -1,7 +1,23 @@
+2007-12-16	Version 0.10
+
+* Add WMI mapper driver (wmi-acer)
+
+* Convert acer_acpi to a platform driver, and call the WMI mapper driver
+
+* Add EC support for Acer Aspire 5650, 3100, 5100 and 9420
+
+* Fix EC support for Acer Aspire 5630 and 9300
+
+* Fix build on 2.6.24 kernels
+
+* Add DMI based autoloading for Acer laptops in 2.6.23 and newer kernels
+
 2007-09-29	Version 0.9.1
 
 * Add EC support for Acer TravelMate 5620
+
 * Fix WMID
+
 * Fix more read/ write errors
 
 2007-09-27	Version 0.9.0
@@ -48,7 +64,7 @@
   Embedded Controller (limited to just the Aspire 5020 and TravelMate 2490 -
   thanks to Petr Tomasek for the TravelMate 2490 support). To test this on
   another laptop, use "force_series=5020" or "force_series=2490" and report
-  back the results. On the 5020 (AMW0), brightness and accurate reading of 
+  back the results. On the 5020 (AMW0), brightness and accurate reading of
   wireless and mail LED are supported. On the 2490 (WMID), mail LED is now
   supported, as well as reading touchpad status. Also, it is possible to force
   the fan on with both laptops by setting the temperature through ACPI.
