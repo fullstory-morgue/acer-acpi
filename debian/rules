@@ -12,7 +12,7 @@ install/acer-acpi-source::
 	done
 		
 	# Prepare upstream source
-	install -m 0644 Makefile *.c debian/tmp/modules/acer-acpi/
+	install -m 0644 Makefile *.c *.h debian/tmp/modules/acer-acpi/
 	
 	# Prepare the debian source tarball
 	tar jcf debian/acer-acpi-source/usr/src/acer-acpi.tar.bz2  \
