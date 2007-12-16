@@ -1,3 +1,11 @@
+2007-12-16 Version 0.10
+	Add ACPI-WMI mapper driver (wmi-acer)
+	Convert acer_acpi to a platform driver, and call the WMI mapper driver
+	Add EC support for Acer Aspire 5650, 3100, 5100 and 9420
+	Fix EC support for Acer Aspire 5630 and 9300
+	Fix build on 2.6.24 kernels
+	Add DMI based autoloading for Acer laptops in 2.6.23 and newer kernels
+
 2007-09-29 Version 0.9.1
 	Add EC support for Acer TravelMate 5620
 	Fix WMID
@@ -45,7 +53,7 @@
 	Makefile no longer gives harmless errors on older 2.6 kernels
 
 2007-05-05 Version 0.5
-	New maintainer added: Carlos Corbacho <cathectic@gmail.com>	
+	New maintainer added: Carlos Corbacho <cathectic@gmail.com>
 	cat /proc/acpi/acer/{feature} now works - see ChangeLog for more
 
 2007-03-31 Version 0.4

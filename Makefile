@@ -13,18 +13,19 @@ KBUILD_BASENAME=
 # don't forget to add the following line to the parent dir's Makefile:
 # (/usr/src/linux/drivers/Makefile)
 # obj-m                           += acer_acpi/
-obj-m += acer_acpi.o
+obj-m += wmi-acer.o acer_acpi.o
+#acer_acpi-objs := wmi-acer.o acer_acpi.o
 
 CC=gcc
-CFLAGS+=-c -Wall -Wstrict-prototypes -Wno-trigraphs -O2 -fomit-frame-pointer -fno-strict-aliasing -fno-common -pipe
+EXTRA_CFLAGS+=-c -Wall -Wstrict-prototypes -Wno-trigraphs -O2 -fomit-frame-pointer -fno-strict-aliasing -fno-common -pipe
 INCLUDE=-I$(KERNELSRC)/include
 
 ifneq ($(KERNELMAJOR), 2.6)
 exit:
 endif
 
-TARGET := acer_acpi.ko
-SOURCE := acer_acpi.c
+TARGET := wmi-acer.ko acer_acpi.ko
+SOURCE := wmi-acer.c acer_acpi.c
 
 all: $(TARGET)
 
@@ -36,6 +37,12 @@ help:
 	@echo -e all\\t- default target, builds kernel module
 	@echo -e install\\t- copies module binary to /lib/modules/$(KERNELVERSION)/extra/
 	@echo -e clean\\t- removes all binaries and temporary files
+
+wmi-acer.ko: $(SOURCE)
+	$(MAKE) -C $(KERNELSRC) SUBDIRS=$(PWD) modules
+
+wmi-acer.o: $(SOURCE)
+	$(CC) $(INCLUDE) $(CFLAGS) -DMODVERSIONS -DMODULE -D__KERNEL__ -o $(TARGET) $(SOURCE)
 
 acer_acpi.ko: $(SOURCE)
 	$(MAKE) -C $(KERNELSRC) SUBDIRS=$(PWD) modules
@@ -56,4 +63,4 @@ unload:
 install: $(TARGET)
 	mkdir -p ${DESTDIR}/lib/modules/$(KERNELVERSION)/extra
 	cp -v $(TARGET) ${DESTDIR}/lib/modules/$(KERNELVERSION)/extra/
-	depmod -a
+	depmod $(KERNELVERSION) -a
