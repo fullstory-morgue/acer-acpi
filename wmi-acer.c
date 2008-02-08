@@ -110,7 +110,8 @@ MODULE_PARM_DESC(debug, "Debugging verbosity level (0=least 2=most)");
 static int acpi_wmi_remove(struct acpi_device *device, int type);
 static int acpi_wmi_add(struct acpi_device *device);
 
-#if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,23)
+#if (LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,23)) || \
+(defined(CONFIG_SUSE_KERNEL) && LINUX_VERSION_CODE == KERNEL_VERSION(2,6,22))
 const static struct acpi_device_id wmi_device_ids[] = {
 	{"PNP0C14", 0},
 	{"pnp0c14", 0},
@@ -122,7 +123,8 @@ MODULE_DEVICE_TABLE(acpi, wmi_device_ids);
 static struct acpi_driver acpi_wmi_driver = {
 	.name = "wmi-acer",
 	.class = ACPI_WMI_CLASS,
-#if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,23)
+#if (LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,23)) || \
+(defined(CONFIG_SUSE_KERNEL) && LINUX_VERSION_CODE == KERNEL_VERSION(2,6,22))
 	.ids = wmi_device_ids,
 #else
 	.ids = "PNP0C14,pnp0c14",
@@ -589,6 +591,50 @@ static __init acpi_status parse_wdg(acpi_handle handle)
 	return status;
 }
 
+/*
+ * WMI can have EmbeddedControl access regions. In which case, we just want to
+ * hand these off to the EC driver.
+ */
+static acpi_status
+acpi_wmi_ec_space_handler(u32 function, acpi_physical_address address,
+		      u32 bits, acpi_integer *value,
+		      void *handler_context, void *region_context)
+{
+	int result = 0, i = 0;
+	u8 temp = 0;
+
+	if ((address > 0xFF) || !value)
+		return AE_BAD_PARAMETER;
+
+	if (function != ACPI_READ && function != ACPI_WRITE)
+		return AE_BAD_PARAMETER;
+
+	if (bits != 8)
+		return AE_BAD_PARAMETER;
+
+	if (function == ACPI_READ) {
+		result = ec_read(address, &temp);
+		(*value) |= ((acpi_integer)temp) << i;
+	} else {
+		temp = 0xff & ((*value) >> i);
+		result = ec_write(address, temp);
+	}
+
+	switch (result) {
+	case -EINVAL:
+		return AE_BAD_PARAMETER;
+		break;
+	case -ENODEV:
+		return AE_NOT_FOUND;
+		break;
+	case -ETIME:
+		return AE_TIME;
+		break;
+	default:
+		return AE_OK;
+	}
+}
+
 static void acpi_wmi_notify(acpi_handle handle, u32 event, void *data)
 {
 	struct guid_block *block;
@@ -622,6 +668,16 @@ static int __init acpi_wmi_add(struct acpi_device *device)
 		return -ENODEV;
 	}
 
+	status = acpi_install_address_space_handler(device->handle,
+						    ACPI_ADR_SPACE_EC,
+						    &acpi_wmi_ec_space_handler,
+						    NULL, NULL);
+	if (ACPI_FAILURE(status)) {
+		ACPI_DEBUG_PRINT((ACPI_DB_ERROR,
+				  "Error installing EC region handler\n"));
+		return -ENODEV;
+	}
+
 	status = parse_wdg(device->handle);
 	if (ACPI_FAILURE(status))
 		return -ENODEV;
@@ -631,6 +687,9 @@ static int __init acpi_wmi_add(struct acpi_device *device)
 
 static int acpi_wmi_remove(struct acpi_device *device, int type)
 {
+	acpi_remove_address_space_handler(device->handle, ACPI_ADR_SPACE_EC,
+						    &acpi_wmi_ec_space_handler);
+
 	acpi_remove_notify_handler(device->handle, ACPI_DEVICE_NOTIFY,
 		acpi_wmi_notify);
 
@@ -648,7 +707,7 @@ static int __init acpi_wmi_init(void)
 
 	result = acpi_bus_register_driver(&acpi_wmi_driver);
 
-	if (ACPI_FAILURE(result)) {
+	if (result < 0) {
 		printk(KERN_INFO PREFIX "Interface device not found\n");
 		return result;
 	}
