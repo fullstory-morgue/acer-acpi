@@ -1,0 +1,47 @@
+Installation
+************
+
+1. You need the kernel sources (or kernel headers for your kernel)
+installed to compile the driver.
+
+2. Your kernel needs loadable module support with version information for
+modules enabled. Usage of procfs is highly recommended.
+
+2.4 series kernels are not supported - you must use a 2.6 series kernel.
+
+In most cases you can skip the next step, the Makefile tries to determine
+the correct directory on its own. Change KERNELSRC _only_ if the 
+autodetection does not work for you. Otherwise proceed directly with step 4.
+
+3. Before you compile the driver, change KERNELSRC in the makefile to your
+path to the kernel build environment. If you are using a self compiled kernel,
+point it to the root of your sources. If you are using a packaged kernel of
+your distribution, install the package with kernel headers
+(Debian:kernel-headers) and point KERNELSRC to where the headers and config
+files are located. If you are using Debian, this
+would be "/lib/modules/<kernelversion>/build".
+
+4. Do:
+	make
+
+5. Do:
+	make install
+to install the kernel module. (You can use DESTDIR for repackaging).
+
+If that step fails, try:
+
+Copy the created files "wmi-acer.ko" and "acer_acpi.ko" to your kernel modules
+path. For most distributions, this is usually:
+"/lib/modules/<kernelversion>/kernel/drivers/char/".
+
+Update module dependencies: depmod -a
+
+6. Try loading the module with:
+	insmod/modprobe wmi-acer (only do this step of loading acer_acpi doesn't
+                                  load this module automatically).
+	insmod/modprobe acer_acpi
+
+On most Acer systems with 2.6.23 or newer kernels, acer_acpi should be
+automatically loaded.
+
+If you don't see any error messages, check the README for usage information.

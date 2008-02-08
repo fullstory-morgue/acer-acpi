@@ -1,4 +1,4 @@
-This is acer_acpi version 0.10
+This is acer_acpi version 0.11
 
 ### THIS IS VERY MUCH A WORK IN PROGRESS.  NO WARRANTY GIVEN.  IF YOU
 ### BREAK YOUR LAPTOP USING THIS DRIVER, YOU GET TO KEEP THE PIECES AND
@@ -35,6 +35,9 @@ between models):
 * inbuilt Bluetooth adapter
 * mail LED of your laptop
 * brightness of the LCD panel
+
+The entries for each device will only be created if the device exists on your
+system.
 
 The syntax for each is the same:
 
@@ -79,13 +82,6 @@ e.g. With the BCM4318 on the 5020 series:
 
 ndiswrapper: Light blinks on when transmitting
 bcm43xx/b43: Solid light, blinks off when transmitting
-
-Also, acer_acpi does not yet have any means of deciding whether to
-enable or disable entries in proc or sysfs - this means that for
-hardware that isn't there, you can still read/ write the corresponding file.
-
-So: Just because it _says_ "bluetooth" in /proc/acpi/acer, doesn't mean
-you now actually have a Bluetooth device.
 
 Credits
 *******
