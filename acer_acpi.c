@@ -33,7 +33,7 @@
  *  Jim Ramsay - Figured out and added support for WMID interface
  */
 
-#define ACER_ACPI_VERSION	"0.11.0"
+#define ACER_ACPI_VERSION	"0.11.1"
 
 /*
  * Comment the following line out to remove /proc support
@@ -595,11 +595,9 @@ static acpi_status AMW0_set_u32(u32 value, u32 cap, struct Interface *iface)
 		if (value > max_brightness)
 			return AE_BAD_PARAMETER;
 		switch (quirks->brightness) {
-		case 1:
-			return ec_write(0x83, value);
 		default:
-			return AE_BAD_ADDRESS;
-		break;
+			return ec_write(0x83, value);
+			break;
 		}
 	default:
 		return AE_BAD_ADDRESS;
