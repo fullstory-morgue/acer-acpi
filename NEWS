@@ -1,3 +1,6 @@
+2008-02-08 Version 0.11.1
+	Fix backlight on AMW0
+
 2008-02-08 Version 0.11
 	Convert AMW0 V2 devices to use WMID methods
 	Enable Aspire 5020 quirks for all AMW0 (V1) laptops

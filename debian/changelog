@@ -1,12 +1,23 @@
-acer-acpi (0.11-2) UNRELEASED; urgency=low
+acer-acpi (0.11.1-1) unstable; urgency=low
 
-  * NOT RELEASED YET
+  * New upstream release:
+    - fix backlight on AMW0.
 
- -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Fri, 08 Feb 2008 22:43:15 +0100
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Sun, 10 Feb 2008 15:15:56 +0100
 
 acer-acpi (0.11-1) unstable; urgency=low
 
-  * New upstream release.
+  * New upstream release:
+    - convert AMW0 V2 devices to use WMID methods
+    - enable Aspire 5020 quirks for all AMW0 (V1) laptops
+    - add different EC quirk for Medion MD 98000 (AMW0)
+    - add device/ feature autodetection
+    - Remove all the EC quirks that are no longer needed after the AMW0 V2 and
+      autodetection changes.
+    - simplify some of the internal code handling for WMID and AMW0 devices
+    - fix build on OpenSuSE 10.3 with patched 2.6.22 kernel
+    - fix mail LED return value on WMID
+    - re-add INSTALL file
 
  -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Fri, 08 Feb 2008 22:42:03 +0100
 
