@@ -1,8 +1,9 @@
 acer-acpi (0.11.1-3) UNRELEASED; urgency=low
 
   * NOT RELEASED YET
+  * fix whitespace for Makefiles.
 
- -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Wed, 20 Feb 2008 21:26:27 +0100
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Wed, 12 Mar 2008 19:31:54 +0100
 
 acer-acpi (0.11.1-2) unstable; urgency=low
 
