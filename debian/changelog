@@ -1,9 +1,13 @@
-acer-acpi (0.11.1-3) UNRELEASED; urgency=low
+acer-acpi (0.11.2-1) unstable; urgency=low
 
-  * NOT RELEASED YET
+  * New upstream release:
+    - fix compile issue on older kernels
+    - add EC quirks for 3610 & 5610
+    - Clean up documentation on 3G
+    - Remove the warning on not detecting the mail LED
   * fix whitespace for Makefiles.
 
- -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Wed, 12 Mar 2008 19:31:54 +0100
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Thu, 13 Mar 2008 01:00:48 +0100
 
 acer-acpi (0.11.1-2) unstable; urgency=low
 

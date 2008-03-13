@@ -2,7 +2,7 @@
  *  Acer Laptop ACPI Extras
  *
  *  Copyright (C) 2005-2007	E.M. Smith
- *  Copyright (C) 2007		Carlos Corbacho <cathectic@gmail.com>
+ *  Copyright (C) 2007-2008	Carlos Corbacho <carlos@strangeworlds.co.uk>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -33,7 +33,7 @@
  *  Jim Ramsay - Figured out and added support for WMID interface
  */
 
-#define ACER_ACPI_VERSION	"0.11.1"
+#define ACER_ACPI_VERSION	"0.11.2"
 
 /*
  * Comment the following line out to remove /proc support
@@ -67,11 +67,6 @@
 #include <acpi/acpi_drivers.h>
 
 #include "wmi-acer.h"
-
-/* Workaround needed for older kernels */
-#ifndef bool
-#define bool int
-#endif
 
 MODULE_AUTHOR("Mark Smith, Carlos Corbacho");
 MODULE_DESCRIPTION("Acer Laptop ACPI Extras Driver");
@@ -375,6 +370,15 @@ static struct dmi_system_id acer_quirks[] = {
 		},
 		.driver_data = &quirk_acer_aspire_5100,
 	},
+        {
+                .callback = dmi_matched,
+                .ident = "Acer Aspire 3610",
+                .matches = {
+                        DMI_MATCH(DMI_SYS_VENDOR, "Acer"),
+                        DMI_MATCH(DMI_PRODUCT_NAME, "Aspire 3610"),
+                },
+                .driver_data = &quirk_acer_travelmate_2490,
+        },
 	{
 		.callback = dmi_matched,
 		.ident = "Acer Aspire 5100",
@@ -384,6 +388,15 @@ static struct dmi_system_id acer_quirks[] = {
 		},
 		.driver_data = &quirk_acer_aspire_5100,
 	},
+        {
+                .callback = dmi_matched,
+                .ident = "Acer Aspire 5610",
+                .matches = {
+                        DMI_MATCH(DMI_SYS_VENDOR, "Acer"),
+                        DMI_MATCH(DMI_PRODUCT_NAME, "Aspire 5610"),
+                },
+                .driver_data = &quirk_acer_travelmate_2490,
+        },
 	{
 		.callback = dmi_matched,
 		.ident = "Acer Aspire 5630",
@@ -435,6 +448,15 @@ static struct dmi_system_id acer_quirks[] = {
 		.matches = {
 			DMI_MATCH(DMI_SYS_VENDOR, "Acer"),
 			DMI_MATCH(DMI_PRODUCT_NAME, "TravelMate 2490"),
+		},
+		.driver_data = &quirk_acer_travelmate_2490,
+	},
+	{
+		.callback = dmi_matched,
+		.ident = "Acer TravelMate 4200",
+		.matches = {
+			DMI_MATCH(DMI_SYS_VENDOR, "Acer"),
+			DMI_MATCH(DMI_PRODUCT_NAME, "TravelMate 4200"),
 		},
 		.driver_data = &quirk_acer_travelmate_2490,
 	},
@@ -1485,11 +1507,11 @@ static int __init acer_acpi_init(void)
 
 	if (wmi_acer_has_guid(WMID_GUID2) && interface) {
 		if (ACPI_FAILURE(WMID_set_capabilities())) {
-			printk(ACER_ERR "Unable to detect available devices\n");
+			printk(ACER_ERR "Unable to detect available WMID devices\n");
 			return -ENODEV;
 		}
 	} else if (!wmi_acer_has_guid(WMID_GUID2) && interface) {
-		printk(ACER_ERR "Unable to detect available devices\n");
+		printk(ACER_ERR "No WMID device detection method found\n");
 		return -ENODEV;
 	}
 
@@ -1498,14 +1520,14 @@ static int __init acer_acpi_init(void)
 		interface = &AMW0_interface;
 
 		if (ACPI_FAILURE(AMW0_set_capabilities())) {
-			printk(ACER_ERR "Unable to detect available devices\n");
+			printk(ACER_ERR "Unable to detect available AMW0 devices\n");
 			return -ENODEV;
 		}
 	}
 
 	if (wmi_acer_has_guid(AMW0_GUID1)) {
 		if (ACPI_FAILURE(AMW0_find_mailled())) {
-			printk(ACER_ERR "Unable to detect mail LED\n");
+			DEBUG(2, "Unable to detect mail LED\n");
 		}
 	}
 

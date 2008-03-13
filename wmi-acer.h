@@ -25,6 +25,8 @@
 /* Workaround needed for older kernels */
 #ifndef bool
 #define bool int
+#define true    1
+#define false   0
 #endif
 
 typedef void (*wmi_notify_handler) (u32 value, void *context);

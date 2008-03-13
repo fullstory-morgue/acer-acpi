@@ -66,8 +66,8 @@ modprobe acer_acpi {feature}=1
 To disable a feature on loading the module (default):
 modprobe acer_acpi {feature}=0
 
-Where {feature} is either wireless, bluetooth, 3G, or mailled. (You can have
-multiple {feature}'s specified on the modprobe line).
+Where {feature} is either wireless, bluetooth, threeg (aka 3G), or mailled.
+(You can have multiple {feature}'s specified on the modprobe line).
 
 For laptops with a "brightness" option, you can write a value between 0 to 9 or
 15 (or 0x0 to 0x9 or 0xF - the maximum brightness varies between laptops).

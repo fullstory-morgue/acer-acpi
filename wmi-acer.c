@@ -52,13 +52,6 @@
 		printk(KERN_DEBUG PREFIX message);\
 }
 
-/* Workaround needed for older kernels */
-#ifndef bool
-#define bool int
-#define true	1
-#define false	0
-#endif
-
 MODULE_AUTHOR("Carlos Corbacho");
 MODULE_DESCRIPTION("ACPI-WMI Mapping Driver - acer_acpi port");
 MODULE_LICENSE("GPL");
