@@ -1,8 +1,10 @@
-acer-acpi (0.11.2-2) UNRELEASED; urgency=low
+acer-acpi (0.11.2-2) ORPHANED; urgency=low
 
   * NOT RELEASED YET
+  * ORPHAN PACKAGE
+  * acer-acpi has been merged in upstream 2.6.25.
 
- -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Thu, 13 Mar 2008 01:03:05 +0100
+ -- Stefan Lippers-Hollmann <s.l-h@gmx.de>  Mon, 28 Apr 2008 19:21:25 +0200
 
 acer-acpi (0.11.2-1) unstable; urgency=low
 
